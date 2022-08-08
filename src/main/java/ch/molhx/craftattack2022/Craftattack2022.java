@@ -1,14 +1,11 @@
 package ch.molhx.craftattack2022;
 
 import ch.molhx.craftattack2022.commands.StateCommand;
-import ch.molhx.craftattack2022.listnener.JoinListener;
+import ch.molhx.craftattack2022.listener.JoinListener;
 import ch.molhx.craftattack2022.service.ConfigService;
 import ch.molhx.craftattack2022.service.StateService;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 public final class Craftattack2022 extends JavaPlugin {
 
