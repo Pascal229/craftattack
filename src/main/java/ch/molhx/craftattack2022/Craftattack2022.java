@@ -1,9 +1,10 @@
 package ch.molhx.craftattack2022;
 
 import ch.molhx.craftattack2022.commands.StateCommand;
-import ch.molhx.craftattack2022.listener.JoinListener;
+import ch.molhx.craftattack2022.events.JoinEvent;
 import ch.molhx.craftattack2022.service.ConfigService;
 import ch.molhx.craftattack2022.service.StateService;
+import ch.molhx.craftattack2022.service.TablistService;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,8 +17,8 @@ public final class Craftattack2022 extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        this.registerListeners();
-        this.registerCommands();
+        registerListeners();
+        registerCommands();
     }
 
     @Override
@@ -26,7 +27,7 @@ public final class Craftattack2022 extends JavaPlugin {
     }
 
     private void registerListeners() {
-        getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinEvent(), this);
     }
 
     private void registerCommands() {
@@ -39,7 +40,4 @@ public final class Craftattack2022 extends JavaPlugin {
     }
 
     public static Craftattack2022 getInstance() {return instance;}
-
-    public StateService getStateService() {return new StateService();}
-    public ConfigService getConfigService() {return new ConfigService();}
 }
