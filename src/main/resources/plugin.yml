@@ -4,7 +4,8 @@ main: ch.molhx.craftattack2022.Craftattack2022
 api-version: 1.19
 commands:
   state:
-    name: craftattack2022
     usage: /state
     aliases:
       - status
+  playtime:
+    usage: /playtime
