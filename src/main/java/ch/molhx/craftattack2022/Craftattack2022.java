@@ -2,6 +2,7 @@ package ch.molhx.craftattack2022;
 
 import ch.molhx.craftattack2022.commands.PlayTimeCommand;
 import ch.molhx.craftattack2022.commands.StateCommand;
+import ch.molhx.craftattack2022.events.BedEvents;
 import ch.molhx.craftattack2022.events.JoinEvent;
 import ch.molhx.craftattack2022.service.PlaytimeService;
 import org.bukkit.ChatColor;
@@ -33,6 +34,7 @@ public final class Craftattack2022 extends JavaPlugin {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+        getServer().getPluginManager().registerEvents(new BedEvents(), this);
     }
 
     private void registerCommands() {
