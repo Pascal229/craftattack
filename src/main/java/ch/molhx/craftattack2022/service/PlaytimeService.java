@@ -50,6 +50,13 @@ public class PlaytimeService {
         return rolesFile.getInt(uuid);
     }
 
+    public int getPlaytimeByUUID(String uuid) {
+        if(!rolesFile.contains(uuid)) {
+            rolesFile.set(uuid, 0);
+        }
+        return rolesFile.getInt(uuid);
+    }
+
     public void setPlaytime(Player player, int playtime) {
         String uuid = player.getUniqueId().toString();
         rolesFile.set(uuid, playtime);

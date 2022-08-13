@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Collection;
 import java.util.Stack;
@@ -13,6 +16,7 @@ public class SleepService {
     private Stack<String> layingPlayers = new Stack<String>();
     private ConfigService configService = new ConfigService();
     private String prefix = Craftattack2022.getInstance().getPrefix();
+    private Boolean isSkipping = false;
 
     public void addLayingPlayer(Player player) {
         if(this.layingPlayers.contains(player.getUniqueId().toString())) return;
@@ -28,25 +32,29 @@ public class SleepService {
         this.skipNight(this.getWorld(), player, false);
     }
 
-    public boolean isLaying(Player player) {
-        return this.layingPlayers.contains(player.getUniqueId().toString());
-    }
-
     public void skipNight(World world, Player latestPlayer, boolean isAddition) {
         Collection<Player> onlinePlayers = (Collection<Player>) Bukkit.getOnlinePlayers();
+
         for(String uuid : this.layingPlayers) {
-            Player player = Bukkit.getPlayer(uuid);
+            Player player = this.getPlayerByUUID(uuid);
+            if(player == null) {
+                this.layingPlayers.remove(uuid);
+                continue;
+            };
 
             // remove all offline players from the list
             if(!onlinePlayers.contains(player)) this.removeLayingPlayer(player);
         }
+        if(isAddition) this.addLayingPlayer(latestPlayer);
 
-        if(world.getTime() < 13000) {
+        if(world.getTime() < 12500 && isAddition) {
+            this.isSkipping = false;
             Bukkit.broadcastMessage(prefix + ChatColor.GRAY + "The night can be skipped only in the night.");
             return;
         }
 
-        if(this.layingPlayers.size() == 0) {
+        if(this.layingPlayers.size() == 0 && world.getTime() > 12500) {
+            this.isSkipping = false;
             Bukkit.broadcastMessage(prefix + ChatColor.GRAY + "All players left the bed.");
             return;
         }
@@ -54,11 +62,18 @@ public class SleepService {
         if(isAddition) Bukkit.broadcastMessage(prefix + ChatColor.GRAY +  latestPlayer.getName() + " zzZ");
 
         if(layingPlayers.size() < this.getMinLayingPlayers()) {
+            this.isSkipping = false;
             Bukkit.broadcastMessage(prefix + ChatColor.GRAY + this.layingPlayers.size() + " / " + this.getMinLayingPlayers() + " players are laying.");
             return;
         } else {
-            world.setTime(1000);
+            if(this.isSkipping) return;
+            this.isSkipping = true;
+
             Bukkit.broadcastMessage(prefix + ChatColor.GRAY + "The night has been skipped. (" + this.layingPlayers.size() + " / " + this.getMinLayingPlayers() + ")");
+            world.setTime(0);
+            world.setStorm(false);
+            world.setThundering(false);
+            world.setWeatherDuration(0);
         }
     }
 
@@ -72,5 +87,12 @@ public class SleepService {
         }
         int minLayingPlayersPercentage = (int) this.configService.get("minLayingPlayers");
         return (int) Math.ceil(this.getWorld().getPlayers().size() * (minLayingPlayersPercentage / 100.0));
+    }
+
+    private Player getPlayerByUUID(String uuid) {
+        for (Player player : this.getWorld().getPlayers()) {
+            if (player.getUniqueId().toString().equals(uuid)) return player;
+        }
+        return null;
     }
 }
