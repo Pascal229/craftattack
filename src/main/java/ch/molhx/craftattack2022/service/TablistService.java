@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.Stack;
+
 public class TablistService {
     public void setTablist(Player player) {
         PlaytimeService playtimeService = new PlaytimeService();
@@ -28,22 +30,28 @@ public class TablistService {
 
     public void setPlayerTeams(Player player) {
         Scoreboard scoreboard = player.getScoreboard();
-
         StateService stateService = new StateService();
 
-        for (String state : stateService.getAllStates()) {
+        Stack<String> states = stateService.getAllStates();
+
+        for (String state : states) {
             Team team = scoreboard.getTeam(state);
-            if(team == null) {
+            if (team == null) {
                 team = scoreboard.registerNewTeam(state);
+                team.setPrefix(state + " ");
+                team.setColor(ChatColor.GRAY);
             }
 
-            team.setPrefix(stateService.getState(player) + " ");
+            for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if(stateService.getState(onlinePlayer).equals(state)) team.addEntry(onlinePlayer.getName());
+            }
+        }
+
+        for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            if(!stateService.getState(onlinePlayer).equals("")) continue;
+            Team team = scoreboard.getTeam("default");
             team.setColor(ChatColor.GRAY);
-
-            System.out.println(stateService.getState(player) + " " + state);
-            if(stateService.getState(player).equals(state)) {
-                team.addEntry(player.getName());
-            }
+            team.addEntry(onlinePlayer.getName());
         }
     }
 }

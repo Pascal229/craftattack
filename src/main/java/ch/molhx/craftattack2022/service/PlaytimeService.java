@@ -15,7 +15,6 @@ public class PlaytimeService {
     private BukkitTask runnable;
 
     public void start() {
-        //LOOP THROUGH ALL PLAYERS
         this.runnable = new BukkitRunnable() {
             @Override
             public void run() {
