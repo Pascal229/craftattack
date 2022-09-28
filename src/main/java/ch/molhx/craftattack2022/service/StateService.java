@@ -16,7 +16,7 @@ public class StateService {
         Object state = rolesFile.get(player.getUniqueId().toString());
 
         if(state == null) {
-            return "";
+            return null;
         }
 
         return this.convertToColor(state.toString());

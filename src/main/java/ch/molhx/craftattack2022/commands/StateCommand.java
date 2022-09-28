@@ -26,7 +26,7 @@ public class StateCommand implements CommandExecutor {
         String prefix = Craftattack2022.getInstance().getPrefix();
 
         if(args.length == 0) {
-            if(stateService.getState(player).equals("")) {
+            if(stateService.getState(player) == null) {
                 player.sendMessage(prefix + ChatColor.RED + "Usage: /state <state>");
                 return true;
             }
@@ -42,7 +42,7 @@ public class StateCommand implements CommandExecutor {
             return true;
         }
 
-        if(stateService.getState(player).equals(state)) {
+        if(stateService.getState(player) != null && stateService.getState(player).equals(state)) {
             player.sendMessage(prefix + ChatColor.RED + "State is already set to " + state);
             return true;
         }

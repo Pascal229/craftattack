@@ -48,7 +48,7 @@ public class TablistService {
         }
 
         for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if(!stateService.getState(onlinePlayer).equals("")) continue;
+            if(stateService.getState(onlinePlayer) != null) continue;
             Team team = scoreboard.getTeam("default");
             team.setColor(ChatColor.GRAY);
             team.addEntry(onlinePlayer.getName());
