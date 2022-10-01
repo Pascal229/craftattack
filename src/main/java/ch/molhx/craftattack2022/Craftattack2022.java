@@ -6,6 +6,7 @@ import ch.molhx.craftattack2022.events.BedEvent;
 import ch.molhx.craftattack2022.events.ChatEvent;
 import ch.molhx.craftattack2022.events.JoinEvent;
 import ch.molhx.craftattack2022.events.ServerPingEvent;
+import ch.molhx.craftattack2022.service.ConfigService;
 import ch.molhx.craftattack2022.service.PlaytimeService;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +27,9 @@ public final class Craftattack2022 extends JavaPlugin {
         this.registerCommands();
 
         this.playtimeService.start();
+
+        ConfigService configService = new ConfigService();
+        configService.set("version", "1.0.0");
     }
 
     @Override

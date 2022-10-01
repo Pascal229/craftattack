@@ -1,5 +1,6 @@
 package ch.molhx.craftattack2022.events;
 
+import ch.molhx.craftattack2022.service.MotdService;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,11 +9,11 @@ import org.bukkit.event.server.ServerListPingEvent;
 public class ServerPingEvent implements Listener {
     @EventHandler
     public void onServerPing(ServerListPingEvent event) {
-        // TODO: Get from config
-        String[] motds = {};
 
+        MotdService motdService = new MotdService();
+        String motd = motdService.getRandomMotd();
 
-        event.setMotd(motds[(int) (Math.random() * motds.length)]);
+        event.setMotd(motd);
         event.setMaxPlayers(Math.max(Bukkit.getOnlinePlayers().size(), 1));
     }
 }

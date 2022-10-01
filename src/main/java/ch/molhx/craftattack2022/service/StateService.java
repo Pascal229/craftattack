@@ -9,7 +9,7 @@ import java.util.Stack;
 
 public class StateService {
 
-    private File file = new File("plugins/Craftattack2022/roles.yml");
+    private File file = new File("plugins/Craftattack2022/states.yml");
     private YamlConfiguration rolesFile = YamlConfiguration.loadConfiguration(file);
 
     public String getState(Player player) {
