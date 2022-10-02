@@ -19,6 +19,6 @@ public class ChatEvent implements Listener {
             state = state + " ";
         }
 
-        e.setFormat(state + ChatColor.GRAY + e.getPlayer().getName() + ": " + ChatColor.WHITE + e.getMessage());
+        e.setFormat(ChatColor.GRAY + state + ChatColor.GRAY + e.getPlayer().getName() + ": " + ChatColor.WHITE + e.getMessage());
     }
 }
