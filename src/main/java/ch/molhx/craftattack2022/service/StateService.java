@@ -15,7 +15,7 @@ public class StateService {
     public String getState(Player player) {
         Object state = rolesFile.get(player.getUniqueId().toString());
 
-        if(state == null) {
+        if(state == "") {
             return null;
         }
 

@@ -9,3 +9,7 @@ commands:
       - status
   playtime:
     usage: /playtime
+  website:
+    usage: /website
+    aliases:
+      - web

@@ -2,6 +2,7 @@ package ch.molhx.craftattack2022;
 
 import ch.molhx.craftattack2022.commands.PlayTimeCommand;
 import ch.molhx.craftattack2022.commands.StateCommand;
+import ch.molhx.craftattack2022.commands.WebsiteCommand;
 import ch.molhx.craftattack2022.events.BedEvent;
 import ch.molhx.craftattack2022.events.ChatEvent;
 import ch.molhx.craftattack2022.events.JoinEvent;
@@ -17,7 +18,6 @@ public final class Craftattack2022 extends JavaPlugin {
     private String prefix = ChatColor.DARK_GRAY + "[" + ChatColor.BLUE + "CraftAttack" + ChatColor.DARK_GRAY + "] ";
 
     private PlaytimeService playtimeService = new PlaytimeService();
-
 
     @Override
     public void onEnable() {
@@ -48,8 +48,8 @@ public final class Craftattack2022 extends JavaPlugin {
     private void registerCommands() {
         getCommand("playtime").setExecutor(new PlayTimeCommand());
         getCommand("state").setExecutor(new StateCommand());
+        getCommand("website").setExecutor(new WebsiteCommand());
     }
-
 
     public String getPrefix() {
         return prefix;

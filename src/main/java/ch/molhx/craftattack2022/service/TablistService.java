@@ -14,7 +14,7 @@ public class TablistService {
         int playtime = playtimeService.getPlaytime(player);
         String playtimeString = playtimeService.formatPlaytime(playtime);
 
-        String header = "\n   " + ChatColor.BLUE + "§lCraftattack " + ChatColor.AQUA + "2022   \n";
+        String header = "\n   " + ChatColor.BLUE + "§lCraftattack " + ChatColor.AQUA + "§l2022   \n";
         String footer = "\n   " + ChatColor.GRAY + "Your playtime: " + ChatColor.GREEN + playtimeString + "   \n";
 
         player.setPlayerListHeaderFooter(header, footer);

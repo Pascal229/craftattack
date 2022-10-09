@@ -14,6 +14,6 @@ public class ServerPingEvent implements Listener {
         String motd = motdService.getRandomMotd();
 
         event.setMotd(motd);
-        event.setMaxPlayers(Math.max(Bukkit.getOnlinePlayers().size(), 1));
+        event.setMaxPlayers(Bukkit.getOnlinePlayers().size() + 1);
     }
 }
