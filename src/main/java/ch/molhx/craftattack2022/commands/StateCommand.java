@@ -25,7 +25,7 @@ public class StateCommand implements CommandExecutor {
         TablistService tablistService = new TablistService();
         String prefix = Craftattack2022.getInstance().getPrefix();
 
-        if(args.length == 0) {
+        if(args.length == 0 || args.length > 1) {
             if(stateService.getState(player) == null) {
                 player.sendMessage(prefix + ChatColor.RED + "Usage: /state <state>");
                 return true;
@@ -35,19 +35,19 @@ public class StateCommand implements CommandExecutor {
             return true;
         }
 
-        String state = args[0];
+        String newState = args[0];
 
-        if(state.replaceAll("&[a-z-0-9]", "").length() > 20) {
+        if(newState.replaceAll("&[a-z-0-9]", "").length() > 20) {
             player.sendMessage(prefix + ChatColor.RED + "State name has to be shorter than 20 characters!");
             return true;
         }
 
-        if(stateService.getState(player) != null && stateService.getState(player).equals(state)) {
-            player.sendMessage(prefix + ChatColor.RED + "State is already set to " + state);
+        if(stateService.getState(player) != null && stateService.getState(player).equals(newState)) {
+            player.sendMessage(prefix + ChatColor.RED + "State is already set to " + newState);
             return true;
         }
 
-        stateService.setState(player, state);
+        stateService.setState(player, newState);
         tablistService.setAllPlayerTeams();
 
         player.sendMessage(prefix + ChatColor.GREEN + "Sucessfully set!");

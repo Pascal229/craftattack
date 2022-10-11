@@ -10,28 +10,26 @@ import java.util.Stack;
 public class StateService {
 
     private File file = new File("plugins/Craftattack2022/states.yml");
-    private YamlConfiguration rolesFile = YamlConfiguration.loadConfiguration(file);
+    private YamlConfiguration stateFile = YamlConfiguration.loadConfiguration(file);
 
     public String getState(Player player) {
-        Object state = rolesFile.get(player.getUniqueId().toString());
+        Object state = stateFile.get(player.getUniqueId().toString());
 
-        if(state == "") {
-            return null;
-        }
+        if(state == "" || state == null) return null;
 
         return this.convertToColor(state.toString());
     }
 
     public void setState(Player player, String state) {
         String uuid = player.getUniqueId().toString();
-        rolesFile.set(uuid, state);
+        stateFile.set(uuid, state);
         this.save();
     }
 
     public Stack<String> getAllStates() {
         Stack<String> allStates = new Stack<String>();
-        for(String key : rolesFile.getKeys(false)) {
-            allStates.push(this.convertToColor(rolesFile.get(key).toString()));
+        for(String key : stateFile.getKeys(false)) {
+            allStates.push(this.convertToColor(stateFile.get(key).toString()));
         }
 
         return allStates;
@@ -43,7 +41,7 @@ public class StateService {
 
     private void save() {
         try {
-            rolesFile.save(file);
+            stateFile.save(file);
         } catch (Exception e) {
             e.printStackTrace();
         }

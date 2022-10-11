@@ -77,10 +77,14 @@ public class PlaytimeService {
     }
 
     public String formatPlaytime(int playtime) {
-        int hours = playtime / 3600;
+        int days = playtime / 86400;
+        int hours = (playtime % 86400) / 3600;
         int minutes = (playtime % 3600) / 60;
         int seconds = (playtime % 3600) % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+        if(days == 0) return String.format("%02dh %02dmin %02ds", hours, minutes, seconds);
+        if(days == 1) return String.format("%d Day %02dh %02dmin %02ds", days, hours, minutes, seconds);
+        return String.format("%d Days, %02dh %02dmin %02ds", days, hours, minutes, seconds);
     }
 
     private void save() {

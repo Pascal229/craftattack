@@ -43,12 +43,15 @@ public class TablistService {
             }
 
             for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                if(stateService.getState(onlinePlayer).equals(state)) team.addEntry(onlinePlayer.getName());
+                String onlinePlayerState = stateService.getState(onlinePlayer);
+                if(onlinePlayerState != null && onlinePlayerState.equals(state)) team.addEntry(onlinePlayer.getName());
             }
         }
 
         for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            if(stateService.getState(onlinePlayer) != null) continue;
+            String onlinePlayerState = stateService.getState(onlinePlayer);
+            if(onlinePlayerState != null) continue;
+
             Team team = scoreboard.getTeam("default");
             if(team == null) {
                 team = scoreboard.registerNewTeam("default");
